@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:ps="http://primefaces.org/sentinel"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div id="layout-menubar" class="Unselectable fontRegular">
+		<div class="layout-menubarinner-box" id="buttonArea">
+			<a href="#" id="layout-menubar-resize" class="BordRad3"
+				title="Menu Resize"><i class="icon-th-list-2"></i></a> <a href="#"
+				id="layout-menubar-resize2" class="BordRad3" title="Open Menu"><i
+				class="icon-menu"></i></a>
+		</div>
+
+		<ps:menu id="sm_leftmenu">
+			<p:submenu id="cb" label="题库维护" icon="icon-yen">
+				<p:menuitem value="添加题目" outcome="/system/add" icon="fa fa-plus" />
+				<p:menuitem value="题目维护" outcome="/index" icon="fa fa-wrench" />
+			</p:submenu>
+			<p:submenu id="system" label="系统设置" icon="icon-cog-alt">
+				<p:menuitem value="组织管理" outcome="/system/group" icon="icon-users" />
+				<p:menuitem value="角色管理" outcome="/system/role_resources"
+					icon="icon-link-2" />
+				<p:menuitem value="用户管理" outcome="/system/users" icon="icon-user" />
+			</p:submenu>
+		</ps:menu>
+
+	</div>
+
+</ui:composition>

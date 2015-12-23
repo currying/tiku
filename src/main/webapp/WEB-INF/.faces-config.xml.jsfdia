@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="101,97,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#login.xhtml:0" NAME="item"
+   PATH="/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{loginController.login}:#system#add.xhtml"
+    NAME="output" PATH="/system/add.xhtml"
+    TARGET="rules:#system#add.xhtml"
+    TITLE="#{loginController.login}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#index.html" PATH="/index.html"
+  SHAPE="336,80,50,25" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#system#add.xhtml" PATH="/system/add.xhtml"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#system#add.xhtml:0" NAME="item"
+   PATH="/system/add.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{topicController.register}:#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml"
+    TITLE="#{topicController.register}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#system#*" PATH="/system/*"
+  SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#system#*:0" NAME="item" PATH="/system/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{loginController.logout}:#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml"
+    TITLE="#{loginController.logout}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#system#modify.xhtml"
+  PATH="/system/modify.xhtml" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#system#modify.xhtml:0" NAME="item"
+   PATH="/system/modify.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{topicModify.modify}:#system#modify.xhtml"
+    NAME="output" PATH="/system/modify.xhtml"
+    TARGET="rules:#system#modify.xhtml"
+    TITLE="#{topicModify.modify}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

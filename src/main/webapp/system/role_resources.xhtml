@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:form prependId="false">
+			<p:growl id="growl" showDetail="true" />
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="增加角色" id="addRole" icon="ui-icon-plusthick"
+						actionListener="#{applicationRoleController.createApplicationRole}"
+						update="newRolePanel,applicationRoles">
+					</p:commandButton>
+
+					<p:commandButton value="删除角色" id="deleteRole"
+						icon="ui-icon-closethick" onclick="PF('cd').show()"
+						disabled="#{applicationRoleController.disabled}" />
+					<p:confirmDialog header="删除角色" severity="alert" widgetVar="cd">
+						<f:facet name="message">
+							<h:outputText value="确认删除该角色？" />
+						</f:facet>
+						<p:commandButton value="删除"
+							actionListener="#{applicationRoleController.deleteRole}"
+							update="newRolePanel,applicationRoles"
+							oncomplete="PF('cd').hide()" icon="ui-icon-check" process="@this" />
+						<p:commandButton value="取消" onclick="PF('cd').hide();"
+							type="button" icon="ui-icon-closethick" />
+					</p:confirmDialog>
+
+					<p:commandButton value="添加操作资源" id="selectResource"
+						icon="ui-icon-search"
+						actionListener="#{applicationRoleController.chooseResource}"
+						disabled="#{applicationRoleController.disabled}" process="@this">
+						<p:ajax event="dialogReturn"
+							listener="#{applicationRoleController.onResourceChosen}"
+							update="growl,currentApplicationResources" />
+					</p:commandButton>
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+				</f:facet>
+			</p:toolbar>
+			<p:panel id="newRolePanel">
+				<p:messages id="msgs" />
+				<h:panelGrid columns="3" cellpadding="5">
+					<h:outputText for="roleKey" value="系统键值" />
+					<p:inputText id="roleKey" value="#{newApplicationRole.key}"
+						required="true" requiredMessage="系统键值不可以为空">
+						<f:validateLength minimum="5" />
+						<f:validator validatorId="latinValidator" />
+						<p:ajax update="msgRoleKey" event="keyup" />
+					</p:inputText>
+					<p:message for="roleKey" id="msgRoleKey" display="icon" />
+					<h:outputText for="roleName" value="角色名称" />
+					<p:inputText id="roleName" value="#{newApplicationRole.name}"
+						required="true" requiredMessage="角色名称不可以为空">
+						<f:validateLength minimum="3" />
+						<p:ajax update="msgRoleName" event="keyup" />
+					</p:inputText>
+					<p:message for="roleName" id="msgRoleName" display="icon" />
+				</h:panelGrid>
+			</p:panel>
+			<div class="ui-grid">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-6">
+						<p:dataTable id="applicationRoles" var="applicationRole"
+							value="#{applicationRoles}" selectionMode="single"
+							selection="#{selectApplicationRole}"
+							rowKey="#{applicationRole.id}">
+							<f:facet name="header">
+								<h:outputText value="系统角色" />
+							</f:facet>
+							<p:ajax event="rowSelect"
+								listener="#{applicationRoleController.onRowSelect}"
+								update="currentApplicationResources,selectResource,deleteRole" />
+							<p:ajax event="rowUnselect"
+								listener="#{applicationRoleController.onRowUnselect}" />
+							<p:column headerText="系统键值">
+								<h:outputText value="#{applicationRole.key}" />
+							</p:column>
+							<p:column headerText="角色名称">
+								<h:outputText value="#{applicationRole.name}" />
+							</p:column>
+						</p:dataTable>
+					</div>
+					<div class="ui-grid-col-6">
+						<p:dataTable var="currentApplicationResource"
+							value="#{currentApplicationResources}"
+							id="currentApplicationResources">
+							<f:facet name="header">
+								<h:outputText value="“#{selectApplicationRole.name}”的操作资源" />
+							</f:facet>
+							<p:column headerText="系统键值" style="width:72px">
+								<h:outputText value="#{currentApplicationResource.key}" />
+							</p:column>
+							<p:column headerText="资源名称" style="width:144px">
+								<h:outputText value="#{currentApplicationResource.name}" />
+							</p:column>
+							<p:column headerText="删除" style="width:24px;text-align:center">
+								<p:commandLink
+									actionListener="#{applicationRoleController.removeResourceFromRole(currentApplicationResource)}"
+									update="currentApplicationResources" process="@this">
+									<i class="fa fa-minus fa-2x" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
