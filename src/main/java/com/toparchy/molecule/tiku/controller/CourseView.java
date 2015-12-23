@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,7 +44,10 @@ public class CourseView implements Serializable {
 	}
 
 	public void onAddCourse(SelectEvent event) {
-		System.out.println(event.toString());
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "新增课程",
+				((Course) event.getObject()).getName());
+
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public void addCourse() {
@@ -51,5 +56,6 @@ public class CourseView implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().closeDialog(newCourse);
 	}
 }
