@@ -35,6 +35,14 @@ public class ApplicationRole implements Serializable {
 	@OrderBy("key ASC")
 	private Set<ApplicationResource> applicationResources = new HashSet<ApplicationResource>();
 
+	public ApplicationRole() {
+	}
+
+	public ApplicationRole(String key, String name) {
+		this.key = key;
+		this.name = name;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -59,10 +67,6 @@ public class ApplicationRole implements Serializable {
 		this.name = name;
 	}
 
-	public Set<ApplicationResource> getApplicationResources() {
-		return applicationResources;
-	}
-
 	public void addApplicationResource(ApplicationResource applicationResource) {
 		applicationResources.add(applicationResource);
 	}
@@ -73,6 +77,10 @@ public class ApplicationRole implements Serializable {
 
 	public void setApplicationResources(Set<ApplicationResource> applicationResources) {
 		this.applicationResources = applicationResources;
+	}
+
+	public Set<ApplicationResource> getApplicationResources() {
+		return applicationResources;
 	}
 
 }

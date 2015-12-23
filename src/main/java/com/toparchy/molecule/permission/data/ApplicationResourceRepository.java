@@ -16,12 +16,12 @@ public class ApplicationResourceRepository {
 	@Inject
 	private EntityManager em;
 
-	public List<ApplicationResource> findByKey(String key) {
+	public ApplicationResource findByKey(String key) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ApplicationResource> criteria = cb.createQuery(ApplicationResource.class);
 		Root<ApplicationResource> applicationResource = criteria.from(ApplicationResource.class);
 		criteria.select(applicationResource).where(cb.equal(applicationResource.get("key"), key));
-		return em.createQuery(criteria).getResultList();
+		return em.createQuery(criteria).getSingleResult();
 	}
 
 	public List<ApplicationResource> findAll() {
