@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -45,6 +46,8 @@ public class Topic implements Serializable {
 	@ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@OrderBy("id ASC")
 	private Set<Tag> tags = new HashSet<Tag>();
+	@ManyToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	private KnowledgePoint knowledgePoint;
 
 	public Topic() {
 	}
@@ -116,4 +119,13 @@ public class Topic implements Serializable {
 	public void setStemFile(String stemFile) {
 		this.stemFile = stemFile;
 	}
+
+	public KnowledgePoint getKnowledgePoint() {
+		return knowledgePoint;
+	}
+
+	public void setKnowledgePoint(KnowledgePoint knowledgePoint) {
+		this.knowledgePoint = knowledgePoint;
+	}
+
 }
