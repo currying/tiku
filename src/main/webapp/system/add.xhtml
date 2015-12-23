@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:form enctype="multipart/form-data" prependId="fasle">
+			<p:panel id="panel">
+				<ui:include src="/system/editor.xhtml" />
+				<h:panelGrid id="grid" columns="3" cellpadding="10">
+					<h:outputText for="tag" value="标签" />
+					<p:inputTextarea id="tag" value="#{topicController.tag}" cols="80"
+						rows="2" required="true" label="标签" />
+					<p:message for="tag" />
+
+					<h:outputText for="materials" value="教材" />
+					<p:inputTextarea id="materials" value="#{newTopic.topicMaterials}"
+						cols="80" rows="2" label="教材" />
+					<p:message for="materials" />
+
+					<h:outputText for="name" value="摘要" />
+					<p:inputTextarea id="name" value="#{newTopic.topicName}" cols="80"
+						rows="2" required="true" label="摘要" />
+					<p:message for="name" />
+
+					<h:outputText for="editor1" value="题目" />
+					<h:inputTextarea id="editor1" value="#{newTopic.topicContent}"
+						required="true" />
+					<p:message for="editor2" />
+					<h:outputText for="editor2" value="答案" />
+					<h:inputTextarea id="editor2" value="#{newTopic.topicAnswer}"
+						required="true" />
+					<p:message for="editor2" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton ajax="false" action="#{topicController.register}"
+				value="提交" validateClient="true" />
+		</h:form>
+	</ui:define>
+</ui:composition>

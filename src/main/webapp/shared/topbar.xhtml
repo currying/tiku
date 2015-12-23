@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<h:form>
+		<div id="layout-header" class="Unselectable fontRegular">
+			<a href="#{request.contextPath}/index.xhtml" id="layout-logo"> <h:graphicImage
+					name="images/LOGO.svg" styleClass="Fleft" library="sentinel-layout" />
+				<span class="Fs19 FontTitilliumSemiBoldItalic Fleft"><span
+					class="softblue">力学</span><span class="hardblue">题库</span></span>
+			</a>
+			<ui:fragment rendered="#{not identity.loggedIn}">
+				<ul id="sm-topmenu" class="layout-header-widgets white Fs14">
+					<li class="Fleft BordRadHalf TexAlCenter"><i
+						class="icon-power"></i>
+						<ul
+							class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+							<li class="Animated05"><h:outputLink value="login.xhtml"
+									class="white Unselectable">
+									<i class="icon-ccw-1"></i>登录</h:outputLink></li>
+							<li class="Animated05"><h:outputLink value="help.xhtml"
+									class="white Unselectable">
+									<i class="icon-lifebuoy"></i>帮助信息</h:outputLink></li>
+						</ul></li>
+				</ul>
+			</ui:fragment>
+			<ui:fragment rendered="#{identity.loggedIn}">
+				<ul id="sm-topmenu" class="layout-header-widgets white Fs14">
+					<li class="Fleft BordRadHalf TexAlCenter"><i
+						class="icon-user-male"></i>
+						<ul
+							class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+							<li class="Animated05"><a class="white Unselectable"><i
+									class="icon-user-male Fs26 OvHidden"></i><span class="Fs18">#{identity.account.loginName}<br />
+										<span class="Fs10">#{identity.account.nickName}</span>
+								</span></a></li>
+						</ul></li>
+					<li class="Fleft BordRadHalf TexAlCenter"><i
+						class="icon-wrench-1"></i>
+						<ul
+							class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+							<li class="Animated05"><a href="#"
+								class="white Unselectable"><i class="icon-sun"></i>系统设置</a></li>
+							<li class="Animated05"><a href="#"
+								class="white Unselectable"><i class="icon-lifebuoy"></i>帮助信息</a></li>
+						</ul></li>
+					<li class="Fleft BordRadHalf TexAlCenter"><i
+						class="icon-power"></i>
+						<ul
+							class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+							<li class="Animated05"><h:outputLink value="search.xhtml"
+									class="white Unselectable">
+									<i class="icon-ccw-1"></i>刷新</h:outputLink></li>
+							<li class="Animated05"><h:commandLink id="logout"
+									action="#{loginController.logout}" class="white Unselectable">
+									<i class="icon-logout"></i>
+								注销
+						</h:commandLink></li>
+						</ul></li>
+				</ul>
+			</ui:fragment>
+		</div>
+	</h:form>
+</ui:composition>

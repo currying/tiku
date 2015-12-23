@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<f:metadata>
+			<f:viewParam id="topicId" name="topicId" value="#{topicId}" />
+			<f:viewAction action="#{topicView.find(topicId)}" />
+		</f:metadata>
+	</f:facet>
+	<title>#{topicView.topic.topicName}</title>
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<h:outputScript name="js/login.js" library="sentinel-layout" />
+	<h:outputStylesheet name="css/font-icon-layout.css"
+		library="sentinel-layout" />
+	<h:outputStylesheet name="css/sentinel-layout.css"
+		library="sentinel-layout" />
+	<h:outputStylesheet name="css/core-layout.css"
+		library="sentinel-layout" />
+</h:head>
+<h:body>
+	<div class="ui-grid">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-2"></div>
+			<div class="ui-grid-col-9">
+				<p:accordionPanel style="text-align:center">
+					<p:tab title="题目">
+						<p:outputLabel deferred="true"
+							value="#{topicView.topic.topicContent}" escape="false" />
+					</p:tab>
+					<p:tab title="答案">
+						<p:outputLabel deferred="true"
+							value="#{topicView.topic.topicAnswer}" escape="false" />
+					</p:tab>
+				</p:accordionPanel>
+			</div>
+			<div class="ui-grid-col-2"></div>
+		</div>
+	</div>
+</h:body>
+</html>
