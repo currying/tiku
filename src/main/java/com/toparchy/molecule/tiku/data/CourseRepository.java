@@ -9,18 +9,18 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.toparchy.molecule.tiku.model.KnowledgePoint;
+import com.toparchy.molecule.tiku.model.Course;
 
 @ApplicationScoped
-public class KnowledgePointRepository {
+public class CourseRepository {
 	@Inject
 	private EntityManager em;
 
-	public List<KnowledgePoint> findFromTo(int start, int max) {
+	public List<Course> findAllOrderByName() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<KnowledgePoint> criteria = cb.createQuery(KnowledgePoint.class);
-		Root<KnowledgePoint> knowledgePoint = criteria.from(KnowledgePoint.class);
-		criteria.select(knowledgePoint);
-		return em.createQuery(criteria).setFirstResult(start).setMaxResults(max).getResultList();
+		CriteriaQuery<Course> criteria = cb.createQuery(Course.class);
+		Root<Course> course = criteria.from(Course.class);
+		criteria.select(course).orderBy(cb.asc(course.get("name")));
+		return em.createQuery(criteria).getResultList();
 	}
 }

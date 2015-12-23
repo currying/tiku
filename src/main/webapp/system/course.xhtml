@@ -13,11 +13,19 @@
 					<p:commandButton value="增加课程" icon="fa fa-plus"
 						actionListener="#{courseView.openDialog}">
 						<p:ajax event="dialogReturn" listener="#{courseView.onAddCourse}"
-							update="growl" />
+							update="growl,panel" />
 					</p:commandButton>
 				</f:facet>
 			</p:toolbar>
 			<p:panel id="panel">
+				<p:dataTable var="course" value="#{courses}" selectionMode="single">
+					<f:facet name="header">
+						<h:outputText value="课程" />
+					</f:facet>
+					<p:column headerText="课程名">
+						<h:outputText value="#{course.name}" />
+					</p:column>
+				</p:dataTable>
 			</p:panel>
 		</h:form>
 	</ui:define>

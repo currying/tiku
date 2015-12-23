@@ -3,6 +3,7 @@ package com.toparchy.molecule.tiku.data;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,6 +14,7 @@ import org.primefaces.model.tagcloud.TagCloudModel;
 
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
 
+@RequestScoped
 public class KnowledgePointListProducer {
 	@Inject
 	private KnowledgePointRepository knowledgePointRepository;
@@ -26,11 +28,10 @@ public class KnowledgePointListProducer {
 		return knowledgePoints;
 	}
 
-	// public void onKnowledgePointListChanged(
-	// @Observes(notifyObserver = Reception.IF_EXISTS) final KnowledgePoint
-	// knowledgePoint) {
-	// retrieveAllKnowledgePointsOrderedByName();
-	// }
+//	public void onKnowledgePointListChanged(
+//			@Observes(notifyObserver = Reception.IF_EXISTS) final KnowledgePoint knowledgePoint) {
+//		retrieveAllKnowledgePointsOrderedByName();
+//	}
 
 	@PostConstruct
 	public void retrieveAllKnowledgePointsOrderedByName() {
