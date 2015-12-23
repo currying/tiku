@@ -8,10 +8,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,6 +29,8 @@ public class Course implements Serializable {
 	private static final long serialVersionUID = -5315810119516507304L;
 	@Id
 	@Column(name = "ID_", length = 50)
+	@GeneratedValue(generator = "course-uuid")
+	@GenericGenerator(name = "course-uuid", strategy = "uuid")
 	private String id;
 	@Column(name = "NAME_", length = 100)
 	private String name;

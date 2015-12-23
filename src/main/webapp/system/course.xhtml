@@ -7,8 +7,15 @@
 	template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 		<h:form enctype="multipart/form-data" prependId="fasle">
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="增加课程" icon="fa fa-plus"
+						actionListener="#{courseView.openDialog}">
+						<p:ajax event="dialogReturn" listener="#{courseView.onAddCourse}" />
+					</p:commandButton>
+				</f:facet>
+			</p:toolbar>
 			<p:panel id="panel">
-			
 			</p:panel>
 		</h:form>
 	</ui:define>

@@ -8,11 +8,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,6 +30,8 @@ public class KnowledgePoint implements Serializable {
 	private static final long serialVersionUID = -4640940653446536602L;
 	@Id
 	@Column(name = "ID_", length = 50)
+	@GeneratedValue(generator = "knowledgepoint-uuid")
+	@GenericGenerator(name = "knowledgepoint-uuid", strategy = "uuid")
 	private String id;
 	@Column(name = "NAME_", length = 100)
 	private String name;
