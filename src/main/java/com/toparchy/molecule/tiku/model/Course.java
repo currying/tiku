@@ -34,7 +34,7 @@ public class Course implements Serializable {
 	private String id;
 	@Column(name = "NAME_", length = 100)
 	private String name;
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "course")
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "course")
 	@JsonIgnore
 	private Set<Chapter> chapters = new HashSet<Chapter>();
 

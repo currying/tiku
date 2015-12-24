@@ -17,6 +17,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
+import com.toparchy.molecule.tiku.data.ChapterListProducer;
 import com.toparchy.molecule.tiku.model.Course;
 import com.toparchy.molecule.tiku.service.CourseRegistration;
 
@@ -30,6 +31,9 @@ public class CourseView implements Serializable {
 	private Course newCourse;
 	@Inject
 	private CourseRegistration courseRegistration;
+	@Inject
+	private ChapterListProducer chapterListProducer;
+
 	@Produces
 	@Named
 	private Course selectCourse;
@@ -48,7 +52,7 @@ public class CourseView implements Serializable {
 		return selectCourse;
 	}
 
-	public void openDialog() {
+	public void openAddCourseDialog() {
 		Map<String, Object> options = new HashMap<String, Object>();
 		options.put("resizable", false);
 		options.put("draggable", false);
@@ -88,6 +92,7 @@ public class CourseView implements Serializable {
 
 	public void onRowSelect(SelectEvent event) {
 		selectCourse = (Course) event.getObject();
+		chapterListProducer.retrieveChapterListByCourse(selectCourse.getId());
 		if (selectCourse != null)
 			disabled = false;
 	}

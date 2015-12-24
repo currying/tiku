@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="shortcut icon" type="image/png"
+			href="#{request.contextPath}/resources/images/favicon.png" />
+	</f:facet>
+	<h:outputScript name="js/layout.js" library="sentinel-layout" />
+	<h:outputStylesheet name="css/screen.css" />
+</h:head>
+<h:body>
+	<h:form>
+		<p:panelGrid style="width:100%;border:none;" columns="3"
+			cellpadding="10">
+			<h:outputText for="name" value="章节名称" />
+			<p:inputText id="name" value="#{newChapter.name}" required="true">
+			</p:inputText>
+			<p:commandButton value="确定"
+				actionListener="#{chapterView.addChapter}" />
+		</p:panelGrid>
+	</h:form>
+</h:body>
+
+</html>

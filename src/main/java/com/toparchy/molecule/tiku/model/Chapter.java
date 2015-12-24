@@ -37,7 +37,7 @@ public class Chapter implements Serializable {
 	private String name;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Course course;
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "chapter")
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "chapter")
 	@JsonIgnore
 	private Set<KnowledgePoint> knowledgePoints = new HashSet<KnowledgePoint>();
 

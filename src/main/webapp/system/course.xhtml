@@ -11,7 +11,7 @@
 			<p:toolbar>
 				<f:facet name="left">
 					<p:commandButton value="增加课程"
-						actionListener="#{courseView.openDialog}">
+						actionListener="#{courseView.openAddCourseDialog}">
 						<p:ajax event="dialogReturn" listener="#{courseView.onAddCourse}"
 							update="growl,panel" />
 					</p:commandButton>
@@ -25,24 +25,42 @@
 						</f:facet>
 						<p:commandButton value="删除"
 							actionListener="#{courseView.deleteCourse}"
-							update="panel,growl,deleteCourse"
-							oncomplete="PF('cd').hide()" icon="ui-icon-check" process="@this" />
+							update="panel,growl,deleteCourse" oncomplete="PF('cd').hide()"
+							icon="ui-icon-check" process="@this" />
 						<p:commandButton value="取消" onclick="PF('cd').hide();"
 							type="button" icon="ui-icon-closethick" />
 					</p:confirmDialog>
+
+					<p:commandButton value="增加章节" id="addChapter"
+						actionListener="#{chapterView.openAddChapterDialog}">
+						<p:ajax event="dialogReturn"
+							listener="#{chapterView.onAddChapter}" update="growl,panel" />
+					</p:commandButton>
 				</f:facet>
 			</p:toolbar>
 			<p:panel id="panel">
-				<p:dataTable var="course" value="#{courses}" selectionMode="single"
-					selection="#{selectCourse}" rowKey="#{course.id}">
+				<p:dataTable id="courseList" var="course" value="#{courses}"
+					selectionMode="single" selection="#{selectCourse}"
+					rowKey="#{course.id}">
 					<f:facet name="header">
 						<h:outputText value="课程" />
 					</f:facet>
 					<p:ajax event="rowSelect" listener="#{courseView.onRowSelect}"
-						update="deleteCourse" />
+						update="deleteCourse,chapterList" />
 					<p:ajax event="rowUnselect" listener="#{courseView.onRowUnselect}" />
 					<p:column headerText="课程名">
 						<h:outputText value="#{course.name}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:dataTable id="chapterList" var="chapter" value="#{chapters}"
+					selectionMode="single" selection="#{selectChapter}"
+					rowKey="#{chapter.id}">
+					<f:facet name="header">
+						<h:outputText value="章节" />
+					</f:facet>
+					<p:column headerText="章节名">
+						<h:outputText value="#{chapter.name}" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>
