@@ -33,36 +33,51 @@
 
 					<p:commandButton value="增加章节" id="addChapter"
 						actionListener="#{chapterView.openAddChapterDialog}">
+						<f:attribute name="courseId" value="#{selectCourse.id}" />
 						<p:ajax event="dialogReturn"
 							listener="#{chapterView.onAddChapter}" update="growl,panel" />
 					</p:commandButton>
 				</f:facet>
 			</p:toolbar>
 			<p:panel id="panel">
-				<p:dataTable id="courseList" var="course" value="#{courses}"
-					selectionMode="single" selection="#{selectCourse}"
-					rowKey="#{course.id}">
-					<f:facet name="header">
-						<h:outputText value="课程" />
-					</f:facet>
-					<p:ajax event="rowSelect" listener="#{courseView.onRowSelect}"
-						update="deleteCourse,chapterList" />
-					<p:ajax event="rowUnselect" listener="#{courseView.onRowUnselect}" />
-					<p:column headerText="课程名">
-						<h:outputText value="#{course.name}" />
-					</p:column>
-				</p:dataTable>
-
-				<p:dataTable id="chapterList" var="chapter" value="#{chapters}"
-					selectionMode="single" selection="#{selectChapter}"
-					rowKey="#{chapter.id}">
-					<f:facet name="header">
-						<h:outputText value="章节" />
-					</f:facet>
-					<p:column headerText="章节名">
-						<h:outputText value="#{chapter.name}" />
-					</p:column>
-				</p:dataTable>
+				<div class="ui-grid">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-3">
+							<p:dataTable id="courseList" var="course" value="#{courses}"
+								selectionMode="single" selection="#{selectCourse}"
+								rowKey="#{course.id}" rows="10" paginator="true"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15">
+								<f:facet name="header">
+									<h:outputText value="课程" />
+								</f:facet>
+								<p:ajax event="rowSelect" listener="#{courseView.onRowSelect}"
+									update="deleteCourse,chapterList" />
+								<p:ajax event="rowUnselect"
+									listener="#{courseView.onRowUnselect}" />
+								<p:column>
+									<h:outputText value="#{course.name}" />
+								</p:column>
+							</p:dataTable>
+						</div>
+						<div class="ui-grid-col-3">
+							<p:dataTable id="chapterList" var="chapter" value="#{chapters}"
+								selectionMode="single" selection="#{selectChapter}"
+								rowKey="#{chapter.id}" rows="10" paginator="true"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15">
+								<f:facet name="header">
+									<h:outputText value="章节" />
+								</f:facet>
+								<p:column>
+									<h:outputText value="#{chapter.name}" />
+								</p:column>
+							</p:dataTable>
+						</div>
+						<div class="ui-grid-col-6">
+						</div>
+					</div>
+				</div>
 			</p:panel>
 		</h:form>
 	</ui:define>

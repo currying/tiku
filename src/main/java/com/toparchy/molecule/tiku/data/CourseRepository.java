@@ -16,6 +16,10 @@ public class CourseRepository {
 	@Inject
 	private EntityManager em;
 
+	public Course findById(String id) {
+		return em.find(Course.class, id);
+	}
+
 	public List<Course> findAllOrderByName() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Course> criteria = cb.createQuery(Course.class);
