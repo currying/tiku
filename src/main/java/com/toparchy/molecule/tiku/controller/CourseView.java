@@ -15,6 +15,7 @@ import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 import com.toparchy.molecule.tiku.model.Course;
 import com.toparchy.molecule.tiku.service.CourseRegistration;
@@ -29,10 +30,22 @@ public class CourseView implements Serializable {
 	private Course newCourse;
 	@Inject
 	private CourseRegistration courseRegistration;
+	@Produces
+	@Named
+	private Course selectCourse;
+	private boolean disabled = true;
 
 	@PostConstruct
 	public void initNewCourse() {
 		newCourse = new Course();
+	}
+
+	public void setSelectCourse(Course selectCourse) {
+		this.selectCourse = selectCourse;
+	}
+
+	public Course getSelectCourse() {
+		return selectCourse;
 	}
 
 	public void openDialog() {
@@ -46,7 +59,6 @@ public class CourseView implements Serializable {
 	public void onAddCourse(SelectEvent event) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "新增课程",
 				((Course) event.getObject()).getName());
-
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
@@ -58,4 +70,29 @@ public class CourseView implements Serializable {
 		}
 		RequestContext.getCurrentInstance().closeDialog(newCourse);
 	}
+
+	public void deleteCourse() {
+		courseRegistration.delete(selectCourse);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "删除课程", selectCourse.getName());
+		FacesContext.getCurrentInstance().addMessage(null, message);
+		disabled = true;
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		selectCourse = (Course) event.getObject();
+		if (selectCourse != null)
+			disabled = false;
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+	}
+
 }

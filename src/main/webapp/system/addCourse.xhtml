@@ -19,11 +19,13 @@
 </h:head>
 <h:body>
 	<h:form>
-		<h:outputText for="name" value="角色名称" />
-		<p:inputText id="name" value="#{newCourse.name}" required="true">
-		</p:inputText>
-		<p:commandButton icon="fa fa-plus"
-			actionListener="#{courseView.addCourse}" />
+		<p:panelGrid style="width:100%;border:none;" columns="3"
+			cellpadding="10">
+			<h:outputText for="name" value="课程名称" />
+			<p:inputText id="name" value="#{newCourse.name}" required="true">
+			</p:inputText>
+			<p:commandButton value="确定" actionListener="#{courseView.addCourse}" />
+		</p:panelGrid>
 	</h:form>
 </h:body>
 
