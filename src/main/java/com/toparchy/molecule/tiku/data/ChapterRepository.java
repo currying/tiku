@@ -32,4 +32,8 @@ public class ChapterRepository {
 				.orderBy(cb.asc(chapter.get("name")));
 		return em.createQuery(criteria).getResultList();
 	}
+
+	public Chapter findById(String chapterId) {
+		return em.find(Chapter.class, chapterId);
+	}
 }

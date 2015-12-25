@@ -24,6 +24,7 @@ public class KnowledgePointListProducer {
 	private List<KnowledgePoint> knowledgePoints;
 	private TagCloudModel model;
 
+	private String chapterId;
 	@Produces
 	@Named
 	public List<KnowledgePoint> getKnowledgePoints() {
@@ -43,6 +44,10 @@ public class KnowledgePointListProducer {
 		for (KnowledgePoint knowledgePoint : knowledgePoints) {
 			model.addTag(new DefaultTagCloudItem(knowledgePoint.getName(), (int) ((Math.random()) * 5 + 1)));
 		}
+	}
+	public void retrieveKnowledgePointListByChapter(String chapterId) {
+		this.chapterId = chapterId;
+		knowledgePoints = knowledgePointRepository.findByChapter(chapterId);
 	}
 
 	public TagCloudModel getModel() {

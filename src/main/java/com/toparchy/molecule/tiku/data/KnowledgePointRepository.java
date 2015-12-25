@@ -10,7 +10,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
-import com.toparchy.molecule.tiku.model.Topic;
 
 @ApplicationScoped
 public class KnowledgePointRepository {
@@ -23,5 +22,14 @@ public class KnowledgePointRepository {
 		Root<KnowledgePoint> knowledgePoint = criteria.from(KnowledgePoint.class);
 		criteria.select(knowledgePoint);
 		return em.createQuery(criteria).setFirstResult(start).setMaxResults(max).getResultList();
+	}
+
+	public List<KnowledgePoint> findByChapter(String chapterId) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<KnowledgePoint> criteria = cb.createQuery(KnowledgePoint.class);
+		Root<KnowledgePoint> knowledgePoint = criteria.from(KnowledgePoint.class);
+		criteria.select(knowledgePoint).where(cb.equal(knowledgePoint.get("chapter").get("id"), chapterId))
+				.orderBy(cb.asc(knowledgePoint.get("name")));
+		return em.createQuery(criteria).getResultList();
 	}
 }

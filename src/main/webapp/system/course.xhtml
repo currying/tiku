@@ -37,6 +37,14 @@
 						<p:ajax event="dialogReturn"
 							listener="#{chapterView.onAddChapter}" update="growl,panel" />
 					</p:commandButton>
+
+					<p:commandButton value="增加知识点" id="addKnowledgePoint"
+						actionListener="#{knowledgePointController.openAddKnowledgePointDialog}">
+						<f:attribute name="chapterId" value="#{selectChapter.id}" />
+						<p:ajax event="dialogReturn"
+							listener="#{knowledgePointController.onAddKnowledgePoint}"
+							update="growl,panel" />
+					</p:commandButton>
 				</f:facet>
 			</p:toolbar>
 			<p:panel id="panel">
@@ -69,12 +77,28 @@
 								<f:facet name="header">
 									<h:outputText value="章节" />
 								</f:facet>
+								<p:ajax event="rowSelect" listener="#{chapterView.onRowSelect}"
+									update="knowledgePointList" />
+								<p:ajax event="rowUnselect"
+									listener="#{chapterView.onRowUnselect}" />
 								<p:column>
 									<h:outputText value="#{chapter.name}" />
 								</p:column>
 							</p:dataTable>
 						</div>
 						<div class="ui-grid-col-6">
+							<p:dataTable id="knowledgePointList" var="knowledgePoint"
+								value="#{knowledgePoints}" selectionMode="single" rows="10"
+								paginator="true"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15">
+								<f:facet name="header">
+									<h:outputText value="知识点" />
+								</f:facet>
+								<p:column>
+									<h:outputText value="#{knowledgePoint.name}" />
+								</p:column>
+							</p:dataTable>
 						</div>
 					</div>
 				</div>

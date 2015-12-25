@@ -18,8 +18,10 @@ import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 import com.toparchy.molecule.tiku.data.CourseRepository;
+import com.toparchy.molecule.tiku.data.KnowledgePointListProducer;
 import com.toparchy.molecule.tiku.model.Chapter;
 import com.toparchy.molecule.tiku.model.Course;
 import com.toparchy.molecule.tiku.service.ChapterRegistration;
@@ -34,20 +36,41 @@ public class ChapterView implements Serializable {
 	private ChapterRegistration chapterRegistration;
 	@Inject
 	private CourseRepository courseRepository;
-
+	@Inject
+	private KnowledgePointListProducer knowledgePointListProducer;
 	@Produces
 	@Named
 	private Chapter newChapter;
 
 	private String courseId;
+	@Produces
+	@Named
+	private Chapter selectChapter;
 	private Course selectCourse;
+	private boolean disabled = true;
 
 	public String getCourseId() {
 		return courseId;
 	}
 
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
+	}
+
+	public Chapter getSelectChapter() {
+		return selectChapter;
+	}
+
+	public void setSelectChapter(Chapter selectChapter) {
+		this.selectChapter = selectChapter;
 	}
 
 	public Course getSelectCourse() {
@@ -86,5 +109,14 @@ public class ChapterView implements Serializable {
 			e.printStackTrace();
 		}
 		RequestContext.getCurrentInstance().closeDialog(newChapter);
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		selectChapter = (Chapter) event.getObject();
+		knowledgePointListProducer.retrieveKnowledgePointListByChapter(selectChapter.getId());
+		if (selectChapter != null)
+			disabled = false;
+	}
+	public void onRowUnselect(UnselectEvent event) {
 	}
 }

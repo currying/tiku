@@ -1,4 +1,4 @@
-package com.toparchy.molecule.tiku.data;
+package com.toparchy.molecule.tiku.controller;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.tagcloud.TagCloudItem;
 
+import com.toparchy.molecule.tiku.data.TagRepository;
+import com.toparchy.molecule.tiku.data.TopicRepository;
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
 import com.toparchy.molecule.tiku.model.Tag;
 import com.toparchy.molecule.tiku.model.Topic;

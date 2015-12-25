@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/dialogTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="chapterId"
+				value="#{knowledgePointController.chapterId}" />
+			<f:viewAction action="#{knowledgePointController.getSelectChapter}" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="content">
+		<p:panelGrid style="width:100%;border:none;" columns="2"
+			cellpadding="10">
+			<h:outputText for="name" value="知识点" />
+			<p:inputText id="name" value="#{newKnowledgePoint.name}"
+				required="true" style="width:160px">
+			</p:inputText>
+			<p:commandButton value="确定"
+				actionListener="#{knowledgePointController.addKnowledgePoint}" />
+		</p:panelGrid>
+	</ui:define>
+</ui:composition>
