@@ -14,6 +14,7 @@ import org.primefaces.context.RequestContext;
 
 import com.toparchy.molecule.tiku.data.ChapterListProducer;
 import com.toparchy.molecule.tiku.data.ChapterRepository;
+import com.toparchy.molecule.tiku.data.KnowledgePointListProducer;
 import com.toparchy.molecule.tiku.model.Chapter;
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
 import com.toparchy.molecule.tiku.service.KnowledgePointRegistration;
@@ -33,7 +34,18 @@ public class KnowledgePointController implements Serializable {
 	@Inject
 	private ChapterListProducer chapterListProducer;
 	@Inject
+	private KnowledgePointListProducer knowledgePointListProducer;
+	@Inject
 	private ChapterRepository chapterRepository;
+	private List<KnowledgePoint> knowledgePoints;
+
+	public List<KnowledgePoint> getKnowledgePoints() {
+		return knowledgePoints;
+	}
+
+	public void setKnowledgePoints(List<KnowledgePoint> knowledgePoints) {
+		this.knowledgePoints = knowledgePoints;
+	}
 
 	public List<Chapter> getChapters() {
 		return chapters;
@@ -76,5 +88,9 @@ public class KnowledgePointController implements Serializable {
 
 	public void onCourseChange() {
 		chapters = chapterListProducer.retrieveChapterListByCourse(selectCourseId);
+	}
+
+	public void onChapterChange() {
+		knowledgePoints = knowledgePointListProducer.retrieveKnowledgePointsByChapter(selectChapterId);
 	}
 }

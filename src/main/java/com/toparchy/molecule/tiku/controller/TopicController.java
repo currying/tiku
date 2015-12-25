@@ -1,32 +1,52 @@
 package com.toparchy.molecule.tiku.controller;
 
+import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.toparchy.molecule.tiku.data.KnowledgePointRepository;
 import com.toparchy.molecule.tiku.data.TagRepository;
 import com.toparchy.molecule.tiku.model.Tag;
 import com.toparchy.molecule.tiku.model.Topic;
 import com.toparchy.molecule.tiku.service.TopicRegistration;
 
 @Model
-public class TopicController {
+@ViewScoped
+public class TopicController implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2740385844058815599L;
 	@Inject
 	private FacesContext facesContext;
 	@Inject
 	private TopicRegistration topicRegistration;
 	@Inject
 	private TagRepository tagRepository;
+	@Inject
+	private KnowledgePointRepository knowledgePointRepository;
 	@Produces
 	@Named
 	private Topic newTopic;
 
 	private String tag;
+	private String knowledgePointId;
+
+	public String getKnowledgePointId() {
+		return knowledgePointId;
+	}
+
+	public void setKnowledgePointId(String knowledgePointId) {
+		this.knowledgePointId = knowledgePointId;
+	}
 
 	public String getTag() {
 		return tag;
@@ -51,6 +71,7 @@ public class TopicController {
 					newTopic.addTag(new Tag(tag));
 				}
 			}
+			newTopic.setKnowledgePoint(knowledgePointRepository.findById(knowledgePointId));
 			topicRegistration.register(newTopic);
 			initNewTopic();
 			return "success";

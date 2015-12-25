@@ -9,7 +9,46 @@
 		<h:form enctype="multipart/form-data" prependId="fasle">
 			<p:panel id="panel">
 				<ui:include src="/system/editor.xhtml" />
+
+				<p:outputLabel for="course" value="选择课程" />
+				<p:selectOneMenu id="course"
+					value="#{knowledgePointController.selectCourseId}"
+					style="width:160px">
+					<p:ajax listener="#{knowledgePointController.onCourseChange}"
+						update="chapter" />
+					<f:selectItem itemLabel="请选择课程" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{courses}" var="course"
+						itemLabel="#{course.name}" itemValue="#{course.id}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="chapter" value="选择章节" />
+				<p:selectOneMenu id="chapter"
+					value="#{knowledgePointController.selectChapterId}"
+					style="width:160px">
+					<p:ajax listener="#{knowledgePointController.onChapterChange}"
+						update="knowledgePoint" />
+					<f:selectItem itemLabel="请选择章节" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{knowledgePointController.chapters}"
+						var="chapter" itemLabel="#{chapter.name}"
+						itemValue="#{chapter.id}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="knowledgePoint" value="选择知识点" />
+				<p:selectOneMenu id="knowledgePoint"
+					value="#{topicController.knowledgePointId}" style="width:160px"
+					required="true">
+					<f:selectItem itemLabel="请选择知识点" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{knowledgePointController.knowledgePoints}"
+						var="knowledgePoint" itemLabel="#{knowledgePoint.name}"
+						itemValue="#{knowledgePoint.id}" />
+				</p:selectOneMenu>
+
 				<h:panelGrid id="grid" columns="3" cellpadding="10">
+
+
 					<h:outputText for="tag" value="标签" />
 					<p:inputTextarea id="tag" value="#{topicController.tag}" cols="80"
 						rows="2" required="true" label="标签" />

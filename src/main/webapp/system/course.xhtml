@@ -69,10 +69,10 @@
 								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								rowsPerPageTemplate="5,10,15">
 								<f:facet name="header">
-									<h:outputText value="知识点" />
+									<h:outputText value="题目列表" />
 								</f:facet>
 								<p:column headerText="摘要">
-									<h:outputLink value="detail.xhtml" target="_blank"
+									<h:outputLink value="/detail.xhtml" target="_blank"
 										style="cursor:pointer">
 										<p:outputLabel value="#{topic.name}" />
 										<f:param name="topicId" value="#{topic.id}" />
@@ -95,6 +95,12 @@
 									<p:dataList value="#{topic.tags}" var="tag" type="definition">
 										<p:outputLabel value="#{tag.tagName}" />
 									</p:dataList>
+								</p:column>
+								<p:column headerText="编辑" rendered="#{identity.loggedIn}">
+									<h:outputLink value="modify.xhtml" target="_blank">
+										<p:outputLabel value="修改" />
+										<f:param name="topicId" value="#{topic.id}" />
+									</h:outputLink>
 								</p:column>
 							</p:dataTable>
 						</div>

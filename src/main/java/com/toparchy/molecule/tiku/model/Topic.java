@@ -43,7 +43,8 @@ public class Topic implements Serializable {
 	@Column(name = "TOPIC_ANSWER_")
 	@Lob
 	private String topicAnswer;
-	@ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.PERSIST,
+			CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@OrderBy("id ASC")
 	private Set<Tag> tags = new HashSet<Tag>();
 	@ManyToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, fetch = FetchType.EAGER)

@@ -133,9 +133,10 @@ public class CourseTreeView implements Serializable {
 			deleteCourseDisabled = false;
 			selectCourse = (Course) event.getTreeNode().getData();
 		}
-		if (event.getTreeNode().getData() instanceof KnowledgePoint)
+		if (event.getTreeNode().getData() instanceof KnowledgePoint) {
 			topics = topicRepository
-					.findTopicByKnowledgePoint(((KnowledgePoint) event.getTreeNode().getData()).getId());
+					.findTopicByKnowledgePointId(((KnowledgePoint) event.getTreeNode().getData()).getId());
+		}
 	}
 
 	public void onNodeUnselect(NodeUnselectEvent event) {

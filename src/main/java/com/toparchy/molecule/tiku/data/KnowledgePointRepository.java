@@ -16,6 +16,10 @@ public class KnowledgePointRepository {
 	@Inject
 	private EntityManager em;
 
+	public KnowledgePoint findById(String id) {
+		return em.find(KnowledgePoint.class, id);
+	}
+
 	public List<KnowledgePoint> findFromTo(int start, int max) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<KnowledgePoint> criteria = cb.createQuery(KnowledgePoint.class);

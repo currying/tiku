@@ -14,6 +14,7 @@ import org.primefaces.model.tagcloud.DefaultTagCloudModel;
 import org.primefaces.model.tagcloud.TagCloudModel;
 
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
+
 @Model
 @RequestScoped
 public class KnowledgePointListProducer {
@@ -42,6 +43,10 @@ public class KnowledgePointListProducer {
 		for (KnowledgePoint knowledgePoint : knowledgePoints) {
 			model.addTag(new DefaultTagCloudItem(knowledgePoint.getName(), (int) ((Math.random()) * 5 + 1)));
 		}
+	}
+
+	public List<KnowledgePoint> retrieveKnowledgePointsByChapter(String chapterId) {
+		return knowledgePointRepository.findByChapter(chapterId);
 	}
 
 	public TagCloudModel getModel() {

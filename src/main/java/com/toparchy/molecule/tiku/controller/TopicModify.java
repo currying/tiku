@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import com.toparchy.molecule.tiku.data.KnowledgePointRepository;
 import com.toparchy.molecule.tiku.data.TagRepository;
 import com.toparchy.molecule.tiku.data.TopicRepository;
 import com.toparchy.molecule.tiku.model.Tag;
@@ -27,7 +28,18 @@ public class TopicModify implements Serializable {
 	private TopicRegistration topicRegistration;
 	@Inject
 	private TagRepository tagRepository;
+	@Inject
+	private KnowledgePointRepository knowledgePointRepository;
 	private Topic selectTopic;
+	private String knowledgePointId;
+
+	public String getKnowledgePointId() {
+		return knowledgePointId;
+	}
+
+	public void setKnowledgePointId(String knowledgePointId) {
+		this.knowledgePointId = knowledgePointId;
+	}
 
 	private String tag;
 
@@ -69,6 +81,7 @@ public class TopicModify implements Serializable {
 					selectTopic.addTag(new Tag(tag));
 				}
 			}
+			selectTopic.setKnowledgePoint(knowledgePointRepository.findById(knowledgePointId));
 			topicRegistration.modify(selectTopic);
 			return "success";
 		} catch (Exception e) {
