@@ -11,84 +11,61 @@
 			<p:toolbar>
 				<f:facet name="left">
 					<p:commandButton value="增加课程"
-						actionListener="#{courseView.openAddCourseDialog}">
-						<p:ajax event="dialogReturn" listener="#{courseView.onAddCourse}"
+						actionListener="#{courseAddController.openAddCourseDialog}">
+						<p:ajax event="dialogReturn"
+							listener="#{courseAddController.onAddCourse}"
 							update="growl,panel" />
 					</p:commandButton>
 
 					<p:commandButton value="删除课程" id="deleteCourse"
 						icon="ui-icon-closethick" onclick="PF('cd').show()"
-						disabled="#{courseView.disabled}" />
+						disabled="#{courseTreeView.deleteCourseDisabled}" />
 					<p:confirmDialog header="删除课程" severity="alert" widgetVar="cd">
 						<f:facet name="message">
 							<h:outputText value="确认删除该课程？" />
 						</f:facet>
 						<p:commandButton value="删除"
-							actionListener="#{courseView.deleteCourse}"
+							actionListener="#{courseTreeView.deleteCourse}"
 							update="panel,growl,deleteCourse" oncomplete="PF('cd').hide()"
 							icon="ui-icon-check" process="@this" />
 						<p:commandButton value="取消" onclick="PF('cd').hide();"
 							type="button" icon="ui-icon-closethick" />
 					</p:confirmDialog>
 
-					<p:commandButton value="增加章节" id="addChapter"
-						actionListener="#{chapterView.openAddChapterDialog}">
-						<f:attribute name="courseId" value="#{selectCourse.id}" />
-						<p:ajax event="dialogReturn"
-							listener="#{chapterView.onAddChapter}" update="growl,panel" />
-					</p:commandButton>
+					<!-- 					<p:commandButton value="增加章节" id="addChapter" -->
+					<!-- 						actionListener="#{courseModifyView.openAddChapterDialog}"> -->
+					<!-- 						<p:ajax event="dialogReturn" -->
+					<!-- 							listener="#{courseModifyView.onAddChapter}" update="growl,panel" /> -->
+					<!-- 					</p:commandButton> -->
 
-					<p:commandButton value="增加知识点" id="addKnowledgePoint"
-						actionListener="#{knowledgePointController.openAddKnowledgePointDialog}">
-						<f:attribute name="chapterId" value="#{selectChapter.id}" />
-						<p:ajax event="dialogReturn"
-							listener="#{knowledgePointController.onAddKnowledgePoint}"
-							update="growl,panel" />
-					</p:commandButton>
+					<!-- 					<p:commandButton value="增加知识点" id="addKnowledgePoint" -->
+					<!-- 						actionListener="#{courseModifyView.openAddKnowledgePointDialog}"> -->
+					<!-- 						<p:ajax event="dialogReturn" -->
+					<!-- 							listener="#{courseModifyView.onAddKnowledgePoint}" -->
+					<!-- 							update="growl,panel" /> -->
+					<!-- 					</p:commandButton> -->
 				</f:facet>
 			</p:toolbar>
 			<p:panel id="panel">
 				<div class="ui-grid">
 					<div class="ui-grid-row">
-						<div class="ui-grid-col-3">
-							<p:dataTable id="courseList" var="course" value="#{courses}"
-								selectionMode="single" selection="#{selectCourse}"
-								rowKey="#{course.id}" rows="10" paginator="true"
-								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-								rowsPerPageTemplate="5,10,15">
-								<f:facet name="header">
-									<h:outputText value="课程" />
-								</f:facet>
-								<p:ajax event="rowSelect" listener="#{courseView.onRowSelect}"
-									update="deleteCourse,chapterList" />
-								<p:ajax event="rowUnselect"
-									listener="#{courseView.onRowUnselect}" />
-								<p:column>
-									<h:outputText value="#{course.name}" />
-								</p:column>
-							</p:dataTable>
+						<div class="ui-grid-col-4">
+							<p:tree id="tree" value="#{courseTreeView.root}" var="node"
+								selectionMode="single"
+								selection="#{courseTreeView.selectedNode}" animate="true">
+								<p:ajax event="select" listener="#{courseTreeView.onNodeSelect}"
+									update="knowledgePointList,deleteCourse" />
+								<p:ajax event="unselect" update="deleteCourse"
+									listener="#{courseTreeView.onNodeUnselect}" />
+								<p:treeNode expandedIcon="ui-icon-folder-open"
+									collapsedIcon="ui-icon-folder-collapsed">
+									<h:outputText value="#{node.name}" />
+								</p:treeNode>
+							</p:tree>
 						</div>
-						<div class="ui-grid-col-3">
-							<p:dataTable id="chapterList" var="chapter" value="#{chapters}"
-								selectionMode="single" selection="#{selectChapter}"
-								rowKey="#{chapter.id}" rows="10" paginator="true"
-								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-								rowsPerPageTemplate="5,10,15">
-								<f:facet name="header">
-									<h:outputText value="章节" />
-								</f:facet>
-								<p:ajax event="rowSelect" listener="#{chapterView.onRowSelect}"
-									update="knowledgePointList" />
-								<p:ajax event="rowUnselect"
-									listener="#{chapterView.onRowUnselect}" />
-								<p:column>
-									<h:outputText value="#{chapter.name}" />
-								</p:column>
-							</p:dataTable>
-						</div>
-						<div class="ui-grid-col-6">
+						<div class="ui-grid-col-8">
 							<p:dataTable id="knowledgePointList" var="knowledgePoint"
-								value="#{knowledgePoints}" selectionMode="single" rows="10"
+								value="#{courseTreeView.knowledgePoints}" rows="10"
 								paginator="true"
 								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								rowsPerPageTemplate="5,10,15">

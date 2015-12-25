@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +14,6 @@ import org.primefaces.model.tagcloud.TagCloudModel;
 
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
 
-@Model
 @RequestScoped
 public class KnowledgePointListProducer {
 	@Inject
@@ -24,7 +22,6 @@ public class KnowledgePointListProducer {
 	private List<KnowledgePoint> knowledgePoints;
 	private TagCloudModel model;
 
-	private String chapterId;
 	@Produces
 	@Named
 	public List<KnowledgePoint> getKnowledgePoints() {
@@ -44,10 +41,6 @@ public class KnowledgePointListProducer {
 		for (KnowledgePoint knowledgePoint : knowledgePoints) {
 			model.addTag(new DefaultTagCloudItem(knowledgePoint.getName(), (int) ((Math.random()) * 5 + 1)));
 		}
-	}
-	public void retrieveKnowledgePointListByChapter(String chapterId) {
-		this.chapterId = chapterId;
-		knowledgePoints = knowledgePointRepository.findByChapter(chapterId);
 	}
 
 	public TagCloudModel getModel() {

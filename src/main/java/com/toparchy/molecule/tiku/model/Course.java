@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,8 +35,9 @@ public class Course implements Serializable {
 	private String id;
 	@Column(name = "NAME_", length = 100)
 	private String name;
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "course")
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "course")
 	@JsonIgnore
+	@OrderBy("name asc")
 	private Set<Chapter> chapters = new HashSet<Chapter>();
 
 	public String getId() {

@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,6 +40,7 @@ public class Chapter implements Serializable {
 	private Course course;
 	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "chapter")
 	@JsonIgnore
+	@OrderBy("name asc")
 	private Set<KnowledgePoint> knowledgePoints = new HashSet<KnowledgePoint>();
 
 	public String getId() {
