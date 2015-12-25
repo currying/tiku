@@ -24,15 +24,15 @@ public class TopicRepository {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Topic> criteria = cb.createQuery(Topic.class);
 		Root<Topic> Topic = criteria.from(Topic.class);
-		criteria.select(Topic).where(cb.equal(Topic.get("topicName"), name));
+		criteria.select(Topic).where(cb.equal(Topic.get("name"), name));
 		return em.createQuery(criteria).getSingleResult();
 	}
 
-	public List<Topic> findAllOrderedByName(String topicName) {
+	public List<Topic> findAllOrderedByName(String name) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Topic> criteria = cb.createQuery(Topic.class);
 		Root<Topic> topic = criteria.from(Topic.class);
-		criteria.select(topic).where(cb.like(topic.<String> get("topicName"), "%" + topicName + "%"));
+		criteria.select(topic).where(cb.like(topic.<String> get("name"), "%" + name + "%"));
 		return em.createQuery(criteria).getResultList();
 	}
 

@@ -1,7 +1,6 @@
 package com.toparchy.molecule.tiku.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +22,14 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import com.toparchy.molecule.tiku.data.ChapterRepository;
 import com.toparchy.molecule.tiku.data.CourseRepository;
 import com.toparchy.molecule.tiku.data.KnowledgePointRepository;
+import com.toparchy.molecule.tiku.data.TopicRepository;
 import com.toparchy.molecule.tiku.model.Chapter;
 import com.toparchy.molecule.tiku.model.Course;
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
+import com.toparchy.molecule.tiku.model.Topic;
 import com.toparchy.molecule.tiku.service.CourseRegistration;
 
 @Model
@@ -37,10 +39,14 @@ public class CourseTreeView implements Serializable {
 	private static final long serialVersionUID = 4979209521004256054L;
 	@Inject
 	private CourseRepository courseRepository;
-
+	@Inject
+	private ChapterRepository chapterRepository;
 	@Inject
 	private KnowledgePointRepository knowledgePointRepository;
-	private List<KnowledgePoint> knowledgePoints;
+	@Inject
+	private TopicRepository topicRepository;
+	// private List<KnowledgePoint> knowledgePoints;
+	private List<Topic> topics;
 	private TreeNode root;
 	private TreeNode selectedNode;
 	private boolean deleteCourseDisabled = true;
@@ -75,22 +81,33 @@ public class CourseTreeView implements Serializable {
 		this.deleteCourseDisabled = deleteCourseDisabled;
 	}
 
-	public List<KnowledgePoint> getKnowledgePoints() {
-		return knowledgePoints;
+	public List<Topic> getTopics() {
+		return topics;
 	}
 
-	public void setKnowledgePoints(List<KnowledgePoint> knowledgePoints) {
-		this.knowledgePoints = knowledgePoints;
+	public void setTopics(List<Topic> topics) {
+		this.topics = topics;
 	}
+
+	// public List<KnowledgePoint> getKnowledgePoints() {
+	// return knowledgePoints;
+	// }
+	//
+	// public void setKnowledgePoints(List<KnowledgePoint> knowledgePoints) {
+	// this.knowledgePoints = knowledgePoints;
+	// }
 
 	@PostConstruct
 	public void init() {
 		newCourse = new Course();
 		root = new DefaultTreeNode("Root", null);
 		for (Course course : courseRepository.findAllOrderByName()) {
-			TreeNode children = new DefaultTreeNode(course, root);
-			for (Chapter chapter : course.getChapters()) {
-				children.getChildren().add(new DefaultTreeNode(chapter));
+			TreeNode courseNode = new DefaultTreeNode(course, root);
+			for (Chapter chapter : chapterRepository.findByCourse(course.getId())) {
+				TreeNode chapterNode = new DefaultTreeNode(chapter, courseNode);
+				for (KnowledgePoint knowledgePoint : knowledgePointRepository.findByChapter(chapter.getId())) {
+					chapterNode.getChildren().add(new DefaultTreeNode(knowledgePoint));
+				}
 			}
 		}
 	}
@@ -116,8 +133,9 @@ public class CourseTreeView implements Serializable {
 			deleteCourseDisabled = false;
 			selectCourse = (Course) event.getTreeNode().getData();
 		}
-		if (event.getTreeNode().getData() instanceof Chapter)
-			knowledgePoints = knowledgePointRepository.findByChapter(((Chapter) event.getTreeNode().getData()).getId());
+		if (event.getTreeNode().getData() instanceof KnowledgePoint)
+			topics = topicRepository
+					.findTopicByKnowledgePoint(((KnowledgePoint) event.getTreeNode().getData()).getId());
 	}
 
 	public void onNodeUnselect(NodeUnselectEvent event) {
@@ -173,6 +191,7 @@ public class CourseTreeView implements Serializable {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "新增知识点",
 				((KnowledgePoint) event.getObject()).getName());
 		FacesContext.getCurrentInstance().addMessage(null, message);
+		init();
 	}
 
 	public void addCourse() {

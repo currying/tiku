@@ -30,7 +30,7 @@ public class Topic implements Serializable {
 	@GenericGenerator(name = "topic-uuid", strategy = "uuid")
 	private String id;
 	@Column(name = "TOPIC_NAME_", length = 255)
-	private String topicName;
+	private String name;
 	@Column(name = "TOPIC_ANSWERFILE_", length = 50)
 	private String answerFile;
 	@Column(name = "TOPIC_STEMFILE_", length = 50)
@@ -60,12 +60,12 @@ public class Topic implements Serializable {
 		this.id = id;
 	}
 
-	public String getTopicName() {
-		return topicName;
+	public String getName() {
+		return name;
 	}
 
-	public void setTopicName(String topicName) {
-		this.topicName = topicName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getTopicContent() {

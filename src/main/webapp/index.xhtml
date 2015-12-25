@@ -16,34 +16,37 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-3" />
 					<div class="ui-grid-col-5">
-						<p:inputText size="100" value="#{knowledgePointView.key}" required="true"
-							placeholder="输入标签或题目摘要进行检索" />
+						<p:inputText size="100" value="#{knowledgePointView.key}"
+							required="true" placeholder="输入标签或题目摘要进行检索" />
 					</div>
 					<div class="ui-grid-col-2">
-						<p:commandButton value="标签检索" actionListener="#{knowledgePointView.select}"
+						<p:commandButton value="标签检索"
+							actionListener="#{knowledgePointView.select}"
 							update="dataTable_tag" />
-						<p:commandButton value="摘要检索" actionListener="#{knowledgePointView.select2}"
-							update="dataTable" />
+						<p:commandButton value="摘要检索"
+							actionListener="#{knowledgePointView.select2}" update="dataTable" />
 					</div>
 					<div class="ui-grid-col-2" />
 				</div>
 			</div>
 			<br />
-			<p:dataTable id="dataTable_tag" var="tag" value="#{knowledgePointView.tags}"
-				selectionMode="single" selection="#{knowledgePointView.selectedTag}"
+			<p:dataTable id="dataTable_tag" var="tag"
+				value="#{knowledgePointView.tags}" selectionMode="single"
+				selection="#{knowledgePointView.selectedTag}"
 				rowKey="#{tag.tagName}" rows="10" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15">
 				<f:facet name="header">
 					<h:outputLabel value="标签列表" />
 				</f:facet>
-				<p:ajax event="rowSelect" listener="#{knowledgePointView.onRowSelect}"
-					update="dataTable" />
+				<p:ajax event="rowSelect"
+					listener="#{knowledgePointView.onRowSelect}" update="dataTable" />
 				<p:column>
 					<p:outputLabel value="#{tag.tagName}" />
 				</p:column>
 			</p:dataTable>
-			<p:dataTable id="dataTable" var="topic" value="#{knowledgePointView.topics}">
+			<p:dataTable id="dataTable" var="topic"
+				value="#{knowledgePointView.topics}">
 				<f:facet name="header" rows="10" paginator="true"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15">
@@ -52,7 +55,7 @@
 				<p:column headerText="摘要">
 					<h:outputLink value="detail.xhtml" target="_blank"
 						style="cursor:pointer">
-						<p:outputLabel value="#{topic.topicName}" />
+						<p:outputLabel value="#{topic.name}" />
 						<f:param name="topicId" value="#{topic.id}" />
 					</h:outputLink>
 				</p:column>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,7 +14,7 @@ import org.primefaces.model.tagcloud.DefaultTagCloudModel;
 import org.primefaces.model.tagcloud.TagCloudModel;
 
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
-
+@Model
 @RequestScoped
 public class KnowledgePointListProducer {
 	@Inject
