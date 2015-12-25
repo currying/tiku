@@ -28,7 +28,7 @@ public class TagRepository {
 
 	public List<Topic> findTopicByTagName(String name) {
 		EntityManager em = emf.createEntityManager();
-		sql = "select topic.TOPIC_ID_,topic.TOPIC_NAME_,topic.TOPIC_ANSWERFILE_,topic.TOPIC_STEMFILE_,topic.TOPIC_CONTENT_,topic.TOPIC_ANSWER_,TOPIC_MATERIALS_ from TOPIC__TAG_ tt "
+		sql = "select topic.TOPIC_ID_,topic.TOPIC_NAME_,topic.TOPIC_ANSWERFILE_,topic.TOPIC_STEMFILE_,topic.TOPIC_CONTENT_,topic.TOPIC_ANSWER_,TOPIC_MATERIALS_,knowledgePoint_ID_ from TOPIC__TAG_ tt "
 				+ "left join TAG_ tag on tag.TAG_NAME_=tt.tags_TAG_NAME_ "
 				+ "left join TOPIC_ topic on topic.TOPIC_ID_=tt.topics_TOPIC_ID_ " + "where tag.TAG_NAME_=?1";
 		query = em.createNativeQuery(sql, Topic.class);

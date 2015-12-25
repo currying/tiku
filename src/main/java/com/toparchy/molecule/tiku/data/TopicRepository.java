@@ -43,4 +43,13 @@ public class TopicRepository {
 		criteria.select(topic);
 		return em.createQuery(criteria).setFirstResult(start).setMaxResults(max).getResultList();
 	}
+
+	public List<Topic> findTopicByKnowledgePoint(String KnowledgePointId) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Topic> criteria = cb.createQuery(Topic.class);
+		Root<Topic> topic = criteria.from(Topic.class);
+		criteria.select(topic).where(cb.equal(topic.get("knowledgePoint").get("name"), KnowledgePointId))
+				.orderBy(cb.asc(topic.get("name")));
+		return em.createQuery(criteria).getResultList();
+	}
 }

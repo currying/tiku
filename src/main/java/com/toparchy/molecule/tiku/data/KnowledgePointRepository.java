@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
+import com.toparchy.molecule.tiku.model.Topic;
 
 @ApplicationScoped
 public class KnowledgePointRepository {

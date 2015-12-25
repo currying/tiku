@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +15,7 @@ import org.primefaces.model.tagcloud.TagCloudModel;
 
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
 
+@Model
 @RequestScoped
 public class KnowledgePointListProducer {
 	@Inject
@@ -28,10 +30,11 @@ public class KnowledgePointListProducer {
 		return knowledgePoints;
 	}
 
-//	public void onKnowledgePointListChanged(
-//			@Observes(notifyObserver = Reception.IF_EXISTS) final KnowledgePoint knowledgePoint) {
-//		retrieveAllKnowledgePointsOrderedByName();
-//	}
+	// public void onKnowledgePointListChanged(
+	// @Observes(notifyObserver = Reception.IF_EXISTS) final KnowledgePoint
+	// knowledgePoint) {
+	// retrieveAllKnowledgePointsOrderedByName();
+	// }
 
 	@PostConstruct
 	public void retrieveAllKnowledgePointsOrderedByName() {
