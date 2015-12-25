@@ -8,12 +8,21 @@
 	<ui:define name="content">
 		<p:panelGrid style="width:100%;border:none;" columns="2"
 			cellpadding="10">
+			<p:outputLabel for="course" value="选择课程" />
+			<p:selectOneMenu id="course"
+				value="#{chapterController.selectCourseId}" style="width:160px"
+				required="true">
+				<f:selectItem itemLabel="请选择课程" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItems value="#{courses}" var="course"
+					itemLabel="#{course.name}" itemValue="#{course.id}" />
+			</p:selectOneMenu>
 			<h:outputText for="name" value="章节名称" />
 			<p:inputText id="name" value="#{newChapter.name}" required="true"
 				style="width:160px">
 			</p:inputText>
 			<p:commandButton value="确定"
-				actionListener="#{courseModifyView.addChapter}" />
+				actionListener="#{chapterController.addChapter}" />
 		</p:panelGrid>
 	</ui:define>
 </ui:composition>

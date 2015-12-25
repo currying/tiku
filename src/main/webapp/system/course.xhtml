@@ -11,10 +11,9 @@
 			<p:toolbar>
 				<f:facet name="left">
 					<p:commandButton value="增加课程"
-						actionListener="#{courseAddController.openAddCourseDialog}">
+						actionListener="#{courseTreeView.openAddCourseDialog}">
 						<p:ajax event="dialogReturn"
-							listener="#{courseAddController.onAddCourse}"
-							update="growl,panel" />
+							listener="#{courseTreeView.onAddCourse}" update="growl,panel" />
 					</p:commandButton>
 
 					<p:commandButton value="删除课程" id="deleteCourse"
@@ -32,18 +31,19 @@
 							type="button" icon="ui-icon-closethick" />
 					</p:confirmDialog>
 
-					<!-- 					<p:commandButton value="增加章节" id="addChapter" -->
-					<!-- 						actionListener="#{courseModifyView.openAddChapterDialog}"> -->
-					<!-- 						<p:ajax event="dialogReturn" -->
-					<!-- 							listener="#{courseModifyView.onAddChapter}" update="growl,panel" /> -->
-					<!-- 					</p:commandButton> -->
+					<p:commandButton value="增加章节" id="addChapter"
+						actionListener="#{courseTreeView.openAddChapterDialog}">
+						<p:ajax event="dialogReturn"
+							listener="#{courseTreeView.onAddChapter}" update="growl,panel" />
+					</p:commandButton>
 
-					<!-- 					<p:commandButton value="增加知识点" id="addKnowledgePoint" -->
-					<!-- 						actionListener="#{courseModifyView.openAddKnowledgePointDialog}"> -->
-					<!-- 						<p:ajax event="dialogReturn" -->
-					<!-- 							listener="#{courseModifyView.onAddKnowledgePoint}" -->
-					<!-- 							update="growl,panel" /> -->
-					<!-- 					</p:commandButton> -->
+					<p:commandButton value="增加知识点" id="addKnowledgePoint"
+						actionListener="#{courseTreeView.openAddKnowledgePointDialog}">
+						<p:ajax event="dialogReturn"
+							listener="#{courseTreeView.onAddKnowledgePoint}"
+							update="growl,panel" />
+					</p:commandButton>
+					
 				</f:facet>
 			</p:toolbar>
 			<p:panel id="panel">

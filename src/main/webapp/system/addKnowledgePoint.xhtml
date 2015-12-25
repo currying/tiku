@@ -8,12 +8,34 @@
 	<ui:define name="content">
 		<p:panelGrid style="width:100%;border:none;" columns="2"
 			cellpadding="10">
+			<p:outputLabel for="course" value="选择课程" />
+			<p:selectOneMenu id="course"
+				value="#{knowledgePointController.selectCourseId}"
+				style="width:160px" required="true">
+				<p:ajax listener="#{knowledgePointController.onCourseChange}"
+					update="chapter" />
+				<f:selectItem itemLabel="请选择课程" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItems value="#{courses}" var="course"
+					itemLabel="#{course.name}" itemValue="#{course.id}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel for="chapter" value="选择章节" />
+			<p:selectOneMenu id="chapter"
+				value="#{knowledgePointController.selectChapterId}"
+				style="width:160px" required="true">
+				<f:selectItem itemLabel="请选择章节" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItems value="#{knowledgePointController.chapters}"
+					var="chapter" itemLabel="#{chapter.name}" itemValue="#{chapter.id}" />
+			</p:selectOneMenu>
+
 			<h:outputText for="name" value="知识点" />
 			<p:inputText id="name" value="#{newKnowledgePoint.name}"
 				required="true" style="width:160px">
 			</p:inputText>
 			<p:commandButton value="确定"
-				actionListener="#{courseModifyView.addKnowledgePoint}" />
+				actionListener="#{knowledgePointController.addKnowledgePoint}" />
 		</p:panelGrid>
 	</ui:define>
 </ui:composition>

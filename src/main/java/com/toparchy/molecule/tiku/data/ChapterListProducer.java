@@ -30,8 +30,9 @@ public class ChapterListProducer {
 		retrieveChapterListByCourse(courseId);
 	}
 
-	public void retrieveChapterListByCourse(String courseId) {
+	public List<Chapter> retrieveChapterListByCourse(String courseId) {
 		this.courseId = courseId;
 		chapters = chapterRepository.findByCourse(courseId);
+		return chapters;
 	}
 }
