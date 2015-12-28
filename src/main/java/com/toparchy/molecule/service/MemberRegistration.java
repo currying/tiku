@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
+import org.picketlink.Identity;
+import org.picketlink.credential.DefaultLoginCredentials;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.credential.Password;
@@ -19,9 +21,10 @@ public class MemberRegistration {
 	private Logger log;
 	@Inject
 	private PartitionManager partitionManager;
-
 	@Inject
 	private Event<Member> memberEventSrc;
+	@Inject
+	private Identity identity;
 
 	public void register(Member member) throws Exception {
 		log.info("Registering " + member.getLoginName());
@@ -29,5 +32,10 @@ public class MemberRegistration {
 		identityManager.add(member);
 		identityManager.updateCredential(member, new Password(member.getPassWord()));
 		memberEventSrc.fire(member);
+	}
+
+	public void modifyPassword(String password) {
+		IdentityManager identityManager = this.partitionManager.createIdentityManager();
+		identityManager.updateCredential(this.identity.getAccount(), new Password(password));
 	}
 }
