@@ -1,6 +1,8 @@
 package com.toparchy.molecule.tiku.data;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -58,12 +60,19 @@ public class TagRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 
-	public List<Tag> findLikeByName(String name) {
+	public Set<Tag> findLikeByName(String[] names) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Tag> criteria = cb.createQuery(Tag.class);
 		Root<Tag> tag = criteria.from(Tag.class);
-		criteria.select(tag).where(cb.like(tag.<String> get("tagName"), "%" + name + "%"));
-		return em.createQuery(criteria).getResultList();
+		Set<Tag> tags = new HashSet<Tag>();
+		for (int i = 0; i < names.length; i++) {
+			criteria.select(tag).where(cb.like(tag.<String> get("tagName"), "%" + names[i] + "%"));
+			List<Tag> tags_ = em.createQuery(criteria).getResultList();
+			for (Tag tag_ : tags_) {
+				tags.add(tag_);
+			}
+		}
+		return tags;
 	}
 
 	public List<Tag> findFromTo(int start, int max) {

@@ -2,6 +2,7 @@ package com.toparchy.molecule.tiku.controller;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.inject.Model;
 import javax.faces.view.ViewScoped;
@@ -23,7 +24,7 @@ public class KnowledgePointView implements Serializable {
 	private static final long serialVersionUID = -6526022580265886607L;
 	private KnowledgePoint selectedKnowledgePoint;
 	private List<Topic> topics;
-	private List<Tag> tags;
+	private Set<Tag> tags;
 	private String key;
 	private Tag selectedTag;
 	@Inject
@@ -61,7 +62,7 @@ public class KnowledgePointView implements Serializable {
 		topics = tagRepository.findTopicByTagName(item.getLabel());
 	}
 
-	public List<Tag> getTags() {
+	public Set<Tag> getTags() {
 		return tags;
 	}
 
@@ -74,7 +75,7 @@ public class KnowledgePointView implements Serializable {
 	}
 
 	public void select() {
-		tags = tagRepository.findLikeByName(key);
+		tags = tagRepository.findLikeByName(key.split(" "));
 	}
 
 	public void select2() {
