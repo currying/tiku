@@ -45,4 +45,14 @@
     TITLE="#{topicModify.modify}:success" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#system#modifyPassword.xhtml"
+  PATH="/system/modifyPassword.xhtml" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#system#modifyPassword.xhtml:0" NAME="item"
+   PATH="/system/modifyPassword.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{modifyPasswordView.modifyPassword}:#index.xhtml"
+    NAME="output" PATH="/index.xhtml" TARGET="rules:#index.xhtml"
+    TITLE="#{modifyPasswordView.modifyPassword}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

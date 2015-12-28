@@ -30,12 +30,14 @@ public class ModifyPasswordView {
 		this.passWord_ = passWord_;
 	}
 
-	public void modifyPassword() {
+	public String modifyPassword() {
 		if (passWord.equals(passWord_)) {
 			memberRegistration.modifyPassword(passWord);
+			return "success";
 		} else {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "错误", "二次密码输入不一致！");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
+		return null;
 	}
 }
