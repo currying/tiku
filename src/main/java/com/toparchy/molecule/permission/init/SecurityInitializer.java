@@ -42,7 +42,7 @@ public class SecurityInitializer {
 			createGroup("adminstrators", "ADMINISTRATOR", "超级管理员");
 			createGroup("teacher_group", "teacher", "教师");
 			createGroup("student_group", "student", "学生");
-			addUser("admin", "admin", "王", "宇轩", "currying", "currying@qq.com", "18652848028", "adminstrators");
+			addUser("admin", "admin0123456789", "王", "宇轩", "currying", "currying@qq.com", "18652848028", "adminstrators");
 
 			createApplicationRole(new ApplicationRole("ADMINISTRATOR", "超级管理员"));
 			createApplicationRole(new ApplicationRole("teacher", "教师"));
