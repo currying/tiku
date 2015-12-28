@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<h:form prependId="fasle">
+			<p:tagCloud model="#{knowledgePointListProducer.model}">
+				<p:ajax event="select" update="dataTable"
+					listener="#{knowledgePointView.onSelectByKnowledgePoint}" />
+			</p:tagCloud>
+
+			<div class="ui-grid">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3" />
+					<div class="ui-grid-col-5">
+						<p:inputText size="100" value="#{knowledgePointView.key}"
+							required="true" placeholder="输入标签或题目摘要进行检索" />
+					</div>
+					<div class="ui-grid-col-2">
+						<p:commandButton value="标签检索"
+							actionListener="#{knowledgePointView.select}"
+							update="dataTable_tag" />
+						<p:commandButton value="摘要检索"
+							actionListener="#{knowledgePointView.select2}" update="dataTable" />
+					</div>
+					<div class="ui-grid-col-2" />
+				</div>
+			</div>
+			<br />
+			<p:dataTable id="dataTable_tag" var="tag"
+				value="#{knowledgePointView.tags}" selectionMode="single"
+				selection="#{knowledgePointView.selectedTag}"
+				rowKey="#{tag.tagName}" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<f:facet name="header">
+					<h:outputLabel value="标签列表" />
+				</f:facet>
+				<p:ajax event="rowSelect"
+					listener="#{knowledgePointView.onRowSelect}" update="dataTable" />
+				<p:column>
+					<p:outputLabel value="#{tag.tagName}" />
+				</p:column>
+			</p:dataTable>
+			<p:dataTable id="dataTable" var="topic"
+				value="#{knowledgePointView.topics}">
+				<f:facet name="header" rows="10" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<h:outputLabel value="题库列表" />
+				</f:facet>
+				<p:column headerText="摘要">
+					<h:outputLink value="detail.xhtml" target="_blank"
+						style="cursor:pointer">
+						<p:outputLabel value="#{topic.name}" />
+						<f:param name="topicId" value="#{topic.id}" />
+					</h:outputLink>
+				</p:column>
+				<p:column headerText="教材">
+					<p:outputLabel value="#{topic.topicMaterials}" />
+				</p:column>
+				<p:column headerText="课程">
+					<p:outputLabel value="#{topic.knowledgePoint.chapter.course.name}" />
+				</p:column>
+				<p:column headerText="章节">
+					<p:outputLabel value="#{topic.knowledgePoint.chapter.name}" />
+				</p:column>
+				<p:column headerText="知识点">
+					<p:outputLabel value="#{topic.knowledgePoint.name}" />
+				</p:column>
+				<p:column headerText="标签">
+					<p:dataList value="#{topic.tags}" var="tag" type="definition">
+						<p:outputLabel value="#{tag.tagName}" />
+					</p:dataList>
+				</p:column>
+				<p:column headerText="编辑" rendered="#{identity.loggedIn}">
+					<h:outputLink value="system/modify.xhtml" target="_blank">
+						<p:outputLabel value="修改" />
+						<f:param name="topicId" value="#{topic.id}" />
+					</h:outputLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

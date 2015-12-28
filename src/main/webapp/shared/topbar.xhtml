@@ -41,18 +41,19 @@
 							class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
 							<li class="Animated05"><a href="#"
 								class="white Unselectable"><i class="icon-sun"></i>系统设置</a></li>
-							<li class="Animated05"><a href="#"
-								class="white Unselectable"><i class="icon-lifebuoy"></i>帮助信息</a></li>
+							<li class="Animated05"><h:outputLink value="systemHelp.xhtml"
+									class="white Unselectable">
+									<i class="icon-lifebuoy"></i>帮助信息</h:outputLink></li>
 						</ul></li>
 					<li class="Fleft BordRadHalf TexAlCenter"><i
 						class="icon-power"></i>
 						<ul
 							class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
-							<li class="Animated05"><h:outputLink value="modifyPassword.xhtml"
-									class="white Unselectable">
+							<li class="Animated05"><h:outputLink
+									value="modifyPassword.xhtml" class="white Unselectable">
 									<i class="icon-ccw-1"></i>修改密码</h:outputLink></li>
-							<li class="Animated05"><h:outputLink value="search.xhtml"
-									class="white Unselectable">
+							<li class="Animated05"><h:outputLink
+									value="topicMaintain.xhtml" class="white Unselectable">
 									<i class="icon-ccw-1"></i>刷新</h:outputLink></li>
 							<li class="Animated05"><h:commandLink id="logout"
 									action="#{loginController.logout}" class="white Unselectable">

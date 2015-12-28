@@ -18,8 +18,9 @@
   <PROCESS-ITEM ID="rules:#system#add.xhtml:0" NAME="item"
    PATH="/system/add.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="success:#{topicController.register}:#index.xhtml" NAME="output"
-    PATH="/index.xhtml" TARGET="rules:#index.xhtml"
+    ID="success:#{topicController.register}:#system#topicMaintain.xhtml"
+    NAME="output" PATH="/system/topicMaintain.xhtml"
+    TARGET="rules:#system#topicMaintain.xhtml"
     TITLE="#{topicController.register}:success" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
@@ -50,9 +51,12 @@
   <PROCESS-ITEM ID="rules:#system#modifyPassword.xhtml:0" NAME="item"
    PATH="/system/modifyPassword.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="success:#{modifyPasswordView.modifyPassword}:#index.xhtml"
-    NAME="output" PATH="/index.xhtml" TARGET="rules:#index.xhtml"
+    ID="success:#{modifyPasswordView.modifyPassword}:#system#topicMaintain.xhtml"
+    NAME="output" PATH="/system/topicMaintain.xhtml"
+    TARGET="rules:#system#topicMaintain.xhtml"
     TITLE="#{modifyPasswordView.modifyPassword}:success" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#system#topicMaintain.xhtml"
+  PATH="/system/topicMaintain.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
