@@ -1,6 +1,7 @@
 package com.toparchy.molecule.tiku.data;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -35,10 +36,15 @@ public class KnowledgePointListProducer {
 	// knowledgePoint) {
 	// retrieveAllKnowledgePointsOrderedByName();
 	// }
+	private static int getRandom(int min, int max) {
+		Random random = new Random();
+		int s = random.nextInt(max) % (max - min + 1) + min;
+		return s;
+	}
 
 	@PostConstruct
 	public void retrieveAllKnowledgePointsOrderedByName() {
-		knowledgePoints = knowledgePointRepository.findFromTo(0, 100);
+		knowledgePoints = knowledgePointRepository.findFromTo(getRandom(0, knowledgePointRepository.count() - 30), 30);
 		model = new DefaultTagCloudModel();
 		for (KnowledgePoint knowledgePoint : knowledgePoints) {
 			model.addTag(new DefaultTagCloudItem(knowledgePoint.getName(), (int) ((Math.random()) * 5 + 1)));

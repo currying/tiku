@@ -20,6 +20,15 @@ public class KnowledgePointRepository {
 		return em.find(KnowledgePoint.class, id);
 	}
 
+	public int count() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
+		Root<KnowledgePoint> knowledgePoint = criteria.from(KnowledgePoint.class);
+		criteria.select(cb.countDistinct(knowledgePoint));
+		int count = em.createQuery(criteria).getSingleResult().intValue();
+		return count;
+	}
+
 	public List<KnowledgePoint> findFromTo(int start, int max) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<KnowledgePoint> criteria = cb.createQuery(KnowledgePoint.class);
