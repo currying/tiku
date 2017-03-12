@@ -40,8 +40,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<version.mysql>5.1.36</version.mysql>
-		<version.primefaces>5.3</version.primefaces>
-		<version.primefaces.ext>3.2.0</version.primefaces.ext>
+		<version.primefaces>6.0</version.primefaces>
+		<version.primefaces.ext>6.0.0</version.primefaces.ext>
 		<version.jtds>1.3.1</version.jtds>
 		<version.netty>4.0.30.Final</version.netty>
 		<version.protostuff>1.3.5</version.protostuff>
@@ -223,11 +223,6 @@
 			<groupId>org.primefaces.extensions</groupId>
 			<artifactId>primefaces-extensions</artifactId>
 			<version>${version.primefaces.ext}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>all-themes</artifactId>
-			<version>1.0.10</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>

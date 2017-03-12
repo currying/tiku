@@ -33,6 +33,7 @@ import org.primefaces.model.menu.MenuItem;
 import org.primefaces.model.menu.Separator;
 import org.primefaces.model.menu.Submenu;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.WidgetBuilder;
 
 public class SentinelMenuRenderer extends BaseMenuRenderer {
 
@@ -111,6 +112,7 @@ public class SentinelMenuRenderer extends BaseMenuRenderer {
         String title = menuitem.getTitle();
         boolean disabled = menuitem.isDisabled();
         String style = menuitem.getStyle();
+        String widgetVar = ((SentinelMenu)menu).resolveWidgetVar();
 
         writer.startElement("a", null);
         if(title != null) writer.writeAttribute("title", title, null);
@@ -124,7 +126,7 @@ public class SentinelMenuRenderer extends BaseMenuRenderer {
         else {
             String onclick = menuitem.getOnclick();
             if(marginLevel == 0) {
-                onclick = (onclick == null) ? "Sentinel.toggleSubMenu(this)" : "Sentinel.toggleSubMenu(this);" + onclick;
+                onclick = (onclick == null) ? "PF('"+ widgetVar +"').toggleSubMenu(this)" : "PF('"+ widgetVar +"').toggleSubMenu(this);" + onclick;
             }
 
             //GET
@@ -196,11 +198,12 @@ public class SentinelMenuRenderer extends BaseMenuRenderer {
 		ResponseWriter writer = context.getResponseWriter();
         String icon = submenu.getIcon();
         String label = submenu.getLabel();
+        String widgetVar = ((SentinelMenu)menu).resolveWidgetVar();
 
         //title
         writer.startElement("a", null);
         writer.writeAttribute("href", "#", null);
-        writer.writeAttribute("onclick", "Sentinel.toggleSubMenu(this);return false;", null);
+        writer.writeAttribute("onclick", "PF('"+ widgetVar +"').toggleSubMenu(this);return false;", null);
         if(marginLevel > 0) {
             writer.writeAttribute("class", "marginLevel-" + marginLevel, null);
         }
@@ -212,7 +215,7 @@ public class SentinelMenuRenderer extends BaseMenuRenderer {
         }
 
         if(label != null) {
-            writer.writeText(label, null);
+            writer.writeText(" " + label, null);
         }
         
         writer.startElement("i", null);
@@ -233,10 +236,9 @@ public class SentinelMenuRenderer extends BaseMenuRenderer {
 
     @Override
     protected void encodeScript(FacesContext context, AbstractMenu abstractMenu) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        writer.startElement("script", null);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.write("Sentinel.restoreMenuState();");
-        writer.endElement("script");
+        SentinelMenu menu = (SentinelMenu) abstractMenu;
+        String clientId = menu.getClientId(context);
+        WidgetBuilder wb = getWidgetBuilder(context);
+        wb.initWithDomReady("Sentinel", menu.resolveWidgetVar(), clientId).finish();
     }
 }

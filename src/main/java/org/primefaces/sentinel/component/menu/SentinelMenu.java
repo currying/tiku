@@ -18,21 +18,25 @@ package org.primefaces.sentinel.component.menu;
 import org.primefaces.component.menu.AbstractMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UINamingContainer;
-import javax.faces.application.ResourceDependencies;
-import javax.faces.application.ResourceDependency;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
+import javax.faces.component.UIViewRoot;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ComponentSystemEvent;
+import javax.faces.event.ComponentSystemEventListener;
+import javax.faces.event.ListenerFor;
+import javax.faces.event.PostAddToViewEvent;
+import org.primefaces.component.api.Widget;
 
-@ResourceDependencies({
-	@ResourceDependency(library="primefaces", name="primefaces.css"),
-	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
-	@ResourceDependency(library="primefaces", name="jquery/jquery-plugins.js"),
-	@ResourceDependency(library="primefaces", name="primefaces.js")
-})
-public class SentinelMenu extends AbstractMenu implements org.primefaces.component.api.Widget {
+@ListenerFor(sourceClass = SentinelMenu.class, systemEventClass = PostAddToViewEvent.class)
+public class SentinelMenu extends AbstractMenu implements Widget,ComponentSystemEventListener {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.component.SentinelMenu";
 	public static final String COMPONENT_FAMILY = "org.primefaces.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.component.SentinelMenuRenderer";
-
+    private static final String[] LEGACY_RESOURCES = new String[]{"primefaces.css","jquery/jquery.js","jquery/jquery-plugins.js","primefaces.js"};
+    private static final String[] MODERN_RESOURCES = new String[]{"components.css","jquery/jquery.js","jquery/jquery-plugins.js","core.js"};
+    
 	protected enum PropertyKeys {
 		widgetVar
 		,model
@@ -97,4 +101,34 @@ public class SentinelMenu extends AbstractMenu implements org.primefaces.compone
 		 else
 			return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
+    
+    @Override
+    public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+        if(event instanceof PostAddToViewEvent) {
+            FacesContext context = getFacesContext();
+            UIViewRoot root = context.getViewRoot();
+            
+            boolean isPrimeConfig;
+            try {
+                isPrimeConfig = Class.forName("org.primefaces.config.PrimeConfiguration") != null;
+            } catch (ClassNotFoundException e) {
+                isPrimeConfig = false;
+            }
+
+            String[] resources = (isPrimeConfig) ? MODERN_RESOURCES : LEGACY_RESOURCES;
+
+            for(String res : resources) {
+                UIComponent component = context.getApplication().createComponent(UIOutput.COMPONENT_TYPE);
+                if(res.endsWith("css"))
+                    component.setRendererType("javax.faces.resource.Stylesheet");
+                else if(res.endsWith("js"))
+                    component.setRendererType("javax.faces.resource.Script");
+
+                component.getAttributes().put("library", "primefaces");
+                component.getAttributes().put("name", res);
+
+                root.addComponentResource(context, component);
+            }
+        }
+    }
 }
