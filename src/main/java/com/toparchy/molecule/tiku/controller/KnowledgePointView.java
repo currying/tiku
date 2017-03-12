@@ -55,6 +55,7 @@ public class KnowledgePointView implements Serializable {
 	public void onSelectByKnowledgePoint(SelectEvent event) {
 		TagCloudItem item = (TagCloudItem) event.getObject();
 		topics = topicRepository.findTopicByKnowledgePointName(item.getLabel());
+		System.out.println(item.getLabel());
 	}
 
 	public void onSelectByTag(SelectEvent event) {

@@ -96,14 +96,14 @@
 			<dependency>
 				<groupId>org.picketlink</groupId>
 				<artifactId>picketlink-javaee-7.0</artifactId>
-				<version>2.7.0.Final</version>
+				<version>2.7.1.Final</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-wildfly</artifactId>
-				<version>9.0.1.Final</version>
+				<version>9.0.2.Final</version>
 				<type>pom</type>
 			</dependency>
 		</dependencies>

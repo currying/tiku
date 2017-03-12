@@ -1,5 +1,6 @@
 package com.toparchy.molecule.tiku.data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
@@ -7,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,8 +19,11 @@ import org.primefaces.model.tagcloud.TagCloudModel;
 import com.toparchy.molecule.tiku.model.KnowledgePoint;
 
 @Model
-@RequestScoped
-public class KnowledgePointListProducer {
+@ViewScoped
+public class KnowledgePointListProducer implements Serializable {
+
+	private static final long serialVersionUID = -1227265344092818557L;
+
 	@Inject
 	private KnowledgePointRepository knowledgePointRepository;
 

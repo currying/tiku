@@ -7,7 +7,7 @@
 	template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 		<h:form prependId="fasle">
-			<p:tagCloud model="#{knowledgePointListProducer.model}">
+			<p:tagCloud model="#{knowledgePointListProducer.model}" id="tagCloud">
 				<p:ajax event="select" update="dataTable"
 					listener="#{knowledgePointView.onSelectByKnowledgePoint}" />
 			</p:tagCloud>
